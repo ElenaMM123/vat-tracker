@@ -1,0 +1,351 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>VAT and GST Rates Tracker</title>
+<meta name="description" content="Current standard VAT and GST rates for 33 jurisdictions across Europe and Asia-Pacific, refreshed daily, with an email alert the moment a rate changes.">
+<meta name="theme-color" content="#2e6e5a">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%232e6e5a'/%3E%3Ccircle cx='16' cy='16' r='8' fill='none' stroke='%23bcd6cc' stroke-width='2'/%3E%3Cline x1='8' y1='16' x2='24' y2='16' stroke='%23bcd6cc' stroke-width='1.5'/%3E%3Cellipse cx='16' cy='16' rx='4' ry='8' fill='none' stroke='%23bcd6cc' stroke-width='1.5'/%3E%3C/svg%3E">
+<meta property="og:type" content="website">
+<meta property="og:title" content="VAT and GST Rates Tracker">
+<meta property="og:description" content="Current standard VAT and GST rates for 33 jurisdictions, with an email alert the moment a rate changes.">
+<meta property="og:url" content="https://elenamihaimarginean.github.io/vat-gst-rates-tracker/">
+<meta property="og:image" content="https://elenamihaimarginean.github.io/vat-gst-rates-tracker/assets/og-image.png">
+<meta property="og:image:width" content="1600">
+<meta property="og:image:height" content="837">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="VAT and GST Rates Tracker">
+<meta name="twitter:description" content="Current standard VAT and GST rates for 33 jurisdictions, with an email alert the moment a rate changes.">
+<meta name="twitter:image" content="https://elenamihaimarginean.github.io/vat-gst-rates-tracker/assets/og-image.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=IBM+Plex+Sans:wght@400;450;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:#edefea; --surface:#fbfbf9; --ink:#1b241f; --muted:#5f6b64; --faint:#7d8880;
+    --line:#dde1db; --line-soft:#e9ebe5;
+    --accent:#2e6e5a; --accent-weak:#dce9e3;
+    --amber:#9c6410;
+    --bar:#bcd6cc;
+    --sans:"IBM Plex Sans", system-ui, sans-serif;
+    --num:"Helvetica Neue", Helvetica, Arial, sans-serif;
+    --display:"Fraunces", Georgia, serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg:#111512; --surface:#191e1b; --ink:#e7ece8; --muted:#97a39c; --faint:#788178;
+      --line:#283029; --line-soft:#202723;
+      --accent:#5fc2a3; --accent-weak:#17302a;
+      --amber:#e0a449;
+      --bar:#2c463c;
+    }
+  }
+  * { box-sizing:border-box; }
+  html { -webkit-text-size-adjust:100%; }
+  body {
+    margin:0; background:var(--bg); color:var(--ink);
+    font-family:var(--sans); font-weight:400; line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap { max-width:900px; margin:0 auto; padding:40px 22px 90px; }
+
+  .mast { display:flex; justify-content:space-between; align-items:flex-end; gap:20px;
+          padding-bottom:20px; border-bottom:1.5px solid var(--ink); flex-wrap:wrap; }
+  .mark { font-family:var(--display); font-weight:500; font-size:27px; letter-spacing:-0.01em;
+          line-height:1.1; margin:0; }
+  .tagline { margin:9px 0 0; color:var(--muted); font-size:14.5px; max-width:52ch; }
+  .asof { text-align:right; font-size:13px; color:var(--muted); line-height:1.6; white-space:nowrap; }
+  .asof b { color:var(--ink); font-weight:500; }
+
+  .spread { display:grid; grid-template-columns:repeat(4,1fr); gap:1px;
+            background:var(--line); border:1px solid var(--line);
+            margin:24px 0 24px; border-radius:10px; overflow:hidden; }
+  .stat { background:var(--surface); padding:16px 18px; }
+  .stat .lbl { font-size:12.5px; color:var(--muted); font-weight:500; margin:0 0 6px; }
+  .stat .big { font-family:var(--num); font-weight:500; font-size:33px; line-height:1;
+               letter-spacing:-0.01em; font-variant-numeric:tabular-nums; }
+  .stat .sub { margin:6px 0 0; font-size:13px; color:var(--faint); }
+  .stat.lo .big { color:var(--accent); }
+  .stat.chg .big { color:var(--amber); }
+
+  .subscribe { margin:0 0 20px; padding:14px 16px; background:var(--accent-weak);
+    border:1px solid var(--line); border-radius:10px; display:flex; align-items:center;
+    gap:16px; flex-wrap:wrap; position:relative; }
+  .subscribe .sub-copy { flex:1; min-width:210px; }
+  .subscribe .sub-title { margin:0; font-size:14.5px; color:var(--ink); font-weight:500; }
+  .subscribe .sub-note { margin:3px 0 0; font-size:12.5px; color:var(--muted); }
+  .subscribe .sub-note a { color:var(--accent); text-decoration:none; }
+  .subscribe .sub-note a:hover { text-decoration:underline; }
+  .subscribe .sub-form { display:flex; gap:8px; }
+  .subscribe .sub-form input[type=email] { padding:9px 12px; font-size:14px; font-family:var(--sans);
+    border:1px solid var(--line); border-radius:8px; background:var(--surface); color:var(--ink); min-width:210px; }
+  .subscribe .sub-form input[type=email]:focus { outline:none; border-color:var(--accent); }
+  .subscribe .sub-form button { border:1px solid var(--accent); background:var(--accent); color:var(--surface);
+    font-family:var(--sans); font-size:14px; font-weight:500; padding:9px 16px; border-radius:8px; cursor:pointer; }
+  .subscribe .sub-form button:hover { opacity:.92; }
+  .subscribe .hp { position:absolute; left:-9999px; width:1px; height:1px; opacity:0; }
+  .subscribe .sub-msg { flex-basis:100%; margin:0; font-size:13px; color:var(--accent); }
+  .subscribe .sub-msg:empty { display:none; }
+  .subscribe .sub-msg.err { color:var(--amber); }
+  .subscribe .sub-privacy { flex-basis:100%; margin:0; font-size:11.5px; color:var(--faint); line-height:1.5; }
+  @media (max-width:560px) { .subscribe .sub-form { width:100%; } .subscribe .sub-form input[type=email] { flex:1; min-width:0; } }
+
+  .bar-row { display:flex; gap:10px; align-items:center; margin-bottom:14px; flex-wrap:wrap; }
+  .search { flex:1; min-width:170px; position:relative; }
+  .search input {
+    width:100%; padding:10px 12px 10px 34px; font-family:var(--sans); font-size:14.5px;
+    color:var(--ink); background:var(--surface); border:1px solid var(--line); border-radius:8px;
+  }
+  .search input::placeholder { color:var(--faint); }
+  .search input:focus { outline:none; border-color:var(--accent); }
+  .search svg { position:absolute; left:11px; top:50%; transform:translateY(-50%);
+                width:15px; height:15px; stroke:var(--faint); fill:none; }
+  .seg { display:inline-flex; background:var(--surface); border:1px solid var(--line);
+         border-radius:8px; padding:3px; gap:2px; }
+  .seg button { border:0; background:transparent; color:var(--muted); cursor:pointer;
+                font-family:var(--sans); font-size:13px; padding:6px 12px; border-radius:6px; }
+  .seg button.on { background:var(--accent-weak); color:var(--accent); font-weight:500; }
+  .seg button:focus-visible { outline:2px solid var(--accent); outline-offset:2px; }
+
+  table { width:100%; border-collapse:collapse; }
+  thead th { text-align:left; font-size:13px; font-weight:500; color:var(--muted);
+             padding:10px 12px; border-bottom:1px solid var(--line); cursor:pointer;
+             user-select:none; white-space:nowrap; }
+  thead th:focus-visible { outline:2px solid var(--accent); outline-offset:-2px; border-radius:4px; }
+  thead th .ar { color:var(--accent); font-size:10px; margin-left:3px; }
+  tbody td { padding:13px 12px; border-bottom:1px solid var(--line-soft); font-size:14.5px;
+             vertical-align:middle; }
+  tbody tr:hover td { background:var(--surface); }
+
+  .flag { display:inline-grid; place-items:center; width:30px; height:21px; border-radius:3px;
+          background:var(--line-soft); font-size:14px; margin-right:11px; vertical-align:middle; }
+  .cty { display:inline-flex; flex-direction:column; vertical-align:middle; }
+  .cty .nm { font-weight:450; }
+  .cty .rg { font-size:12px; color:var(--faint); margin-top:1px; }
+
+  td.type .pill { font-size:12px; color:var(--muted); border:1px solid var(--line);
+                  padding:2px 8px; border-radius:999px; }
+  td.type .pill.gst { color:var(--accent); border-color:var(--accent-weak); background:var(--accent-weak); }
+
+  td.rate { width:200px; }
+  .rate .num { font-family:var(--num); font-weight:500; font-size:18px;
+               font-variant-numeric:tabular-nums; }
+  .rate .track { margin-top:6px; height:3px; border-radius:2px; background:var(--line-soft); overflow:hidden; }
+  .rate .fill { display:block; height:100%; background:var(--bar); border-radius:2px; }
+  tr.recent .rate .fill { background:var(--amber); }
+
+  td.when { color:var(--muted); font-size:13.5px; white-space:nowrap; }
+  td.when .flag-new { color:var(--amber); font-weight:500; }
+  td.when .none { color:var(--faint); }
+
+  footer { margin-top:26px; padding-top:18px; border-top:1px solid var(--line);
+           font-size:12.5px; color:var(--faint); line-height:1.6; }
+  footer a { color:var(--accent); text-decoration:none; }
+  footer a:hover { text-decoration:underline; }
+
+  .colophon { margin-top:18px; display:flex; justify-content:space-between; align-items:center;
+    gap:14px; flex-wrap:wrap; font-size:13.5px; color:var(--muted); }
+  .colophon .by b { color:var(--ink); font-weight:500; }
+  .colophon .links { display:flex; gap:8px; }
+  .colophon .links a { display:inline-flex; align-items:center; gap:6px; color:var(--accent);
+    text-decoration:none; border:1px solid var(--line); padding:6px 11px; border-radius:8px; }
+  .colophon .links a:hover { border-color:var(--accent); background:var(--accent-weak); }
+  .colophon .links a svg { width:15px; height:15px; fill:currentColor; }
+
+  .loading, .err { padding:40px 12px; color:var(--muted); font-size:14.5px; }
+
+  @media (max-width:560px) {
+    .wrap { padding:28px 16px 70px; }
+    .spread { grid-template-columns:repeat(2,1fr); }
+    .stat .big { font-size:28px; }
+    td.rate { width:120px; }
+    .cty .rg { display:none; }
+    td.when { font-size:12.5px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="mast">
+    <div>
+      <h1 class="mark">VAT and GST Rates Tracker</h1>
+      <p class="tagline">Standard VAT and GST rates across 33 jurisdictions, refreshed daily from the European Commission database and national sources.</p>
+    </div>
+    <div class="asof">
+      <div><b id="count">—</b> jurisdictions</div>
+      <div>as of <b id="updated">—</b></div>
+    </div>
+  </header>
+
+  <section class="spread" id="spread" aria-label="Summary">
+    <div class="stat lo"><p class="lbl">Lowest</p><div class="big" id="s-lo">—</div><p class="sub" id="s-lo-n"></p></div>
+    <div class="stat hi"><p class="lbl">Highest</p><div class="big" id="s-hi">—</div><p class="sub" id="s-hi-n"></p></div>
+    <div class="stat"><p class="lbl">Average</p><div class="big" id="s-avg">—</div><p class="sub">across all rates</p></div>
+    <div class="stat chg"><p class="lbl">Changed recently</p><div class="big" id="s-chg">—</div><p class="sub">in the last 120 days</p></div>
+  </section>
+
+  <!-- Email alerts via Buttondown (newsletter: vat-gst-rates-tracker). -->
+  <div class="subscribe">
+    <div class="sub-copy">
+      <p class="sub-title">Get an email whenever a rate changes.</p>
+      <p class="sub-note">Rare, only when a VAT or GST rate actually moves. Prefer GitHub? <a href="https://github.com/elenamihaimarginean/vat-gst-rates-tracker" target="_blank" rel="noopener">Watch the repo</a> to get the same alerts there.</p>
+    </div>
+    <form class="sub-form" id="subForm" method="post" target="bd-iframe"
+          action="https://buttondown.com/api/emails/embed-subscribe/vat-gst-rates-tracker">
+      <input type="email" name="email" id="subEmail" placeholder="you@example.com" required aria-label="Email address">
+      <button type="submit">Subscribe</button>
+    </form>
+    <p class="sub-msg" id="subMsg" role="status" aria-live="polite"></p>
+    <p class="sub-privacy">Your email is used only to send rate-change alerts, delivered via Buttondown, and you can unsubscribe at any time.</p>
+  </div>
+
+  <iframe name="bd-iframe" title="subscribe target" style="display:none" aria-hidden="true"></iframe>
+
+  <div class="bar-row">
+    <label class="search">
+      <svg viewBox="0 0 24 24" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4"/></svg>
+      <input type="search" id="q" placeholder="Find a country" aria-label="Find a country">
+    </label>
+    <div class="seg" id="region" role="group" aria-label="Region">
+      <button data-r="all" class="on">All</button>
+      <button data-r="EU">EU</button>
+      <button data-r="Europe (non-EU)">Europe</button>
+      <button data-r="Asia-Pacific">APAC</button>
+    </div>
+  </div>
+
+  <div id="mount"><div class="loading">Loading rates…</div></div>
+
+  <footer>
+    European rates from the <a href="https://taxation-customs.ec.europa.eu/">European Commission</a> Taxes in Europe Database, via the <a href="https://github.com/vatnode/eu-vat-rates-data">VATNode dataset</a>, checked daily. Asia-Pacific GST from each national tax authority: Singapore (<a href="https://www.iras.gov.sg/taxes/goods-services-tax-(gst)/basics-of-gst/goods-and-services-tax-(gst)-what-it-is-and-how-it-works">IRAS</a>), Australia (<a href="https://www.ato.gov.au/businesses-and-organisations/gst-excise-and-indirect-taxes/gst">ATO</a>) and New Zealand (<a href="https://www.ird.govt.nz/gst">Inland Revenue</a>), maintained by hand and reviewed periodically. Standard rates only, for reference, not tax advice. Subscribers are emailed only when a tracked rate changes; emails are delivered via Buttondown and you can unsubscribe at any time.
+  </footer>
+
+  <div class="colophon">
+    <span class="by">Built by <b>Sorina Elena Mihai-Marginean</b></span>
+    <span class="links">
+      <a href="https://github.com/elenamihaimarginean" target="_blank" rel="noopener">
+        <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.6 7.6 0 014 0c1.53-1.03 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+        GitHub
+      </a>
+      <a href="https://www.linkedin.com/in/sorina-elena-mihai-marginean/" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 110-4.12 2.06 2.06 0 010 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .78 23.2 0 22.22 0z"/></svg>
+        LinkedIn
+      </a>
+    </span>
+  </div>
+</div>
+
+<script>
+const COLS = [
+  { key:"name",         label:"Country" },
+  { key:"type",         label:"Type" },
+  { key:"standard",     label:"Standard rate" },
+  { key:"last_changed", label:"Last changed" },
+];
+const BAR_MAX = 30;            // rate scale ceiling for the inline bar
+const RECENT_DAYS = 120;
+let DATA = [], sortKey = "name", sortDir = 1, region = "all", query = "";
+
+const flag = c => (!c || c.length !== 2) ? "🏳"
+  : String.fromCodePoint(...[...c.toUpperCase()].map(ch => 0x1f1e6 + ch.charCodeAt(0) - 65));
+const recent = d => { if (!d) return false; const n=(Date.now()-new Date(d))/864e5; return n>=0 && n<=RECENT_DAYS; };
+const fmt = v => (Number.isInteger(v) ? v : v.toFixed(1)) + "%";
+const regionShort = r => r === "Europe (non-EU)" ? "Non-EU Europe" : r === "Asia-Pacific" ? "Asia-Pacific" : "EU";
+
+function stats(rows) {
+  if (!rows.length) return;
+  const byRate = [...rows].sort((a,b)=>a.standard-b.standard);
+  const lo = byRate[0], hi = byRate[byRate.length-1];
+  const avg = rows.reduce((s,c)=>s+c.standard,0)/rows.length;
+  const chg = rows.filter(c=>recent(c.last_changed)).length;
+  document.getElementById("s-lo").textContent = fmt(lo.standard);
+  document.getElementById("s-lo-n").textContent = lo.name;
+  document.getElementById("s-hi").textContent = fmt(hi.standard);
+  document.getElementById("s-hi-n").textContent = hi.name;
+  document.getElementById("s-avg").textContent = avg.toFixed(1)+"%";
+  document.getElementById("s-chg").textContent = chg;
+}
+
+function render() {
+  const rows = DATA
+    .filter(c => region === "all" || c.region === region)
+    .filter(c => c.name.toLowerCase().includes(query))
+    .sort((a,b) => {
+      let x=a[sortKey], y=b[sortKey];
+      if (sortKey==="standard") { x=x??-1; y=y??-1; }
+      else { x=(x??"").toString().toLowerCase(); y=(y??"").toString().toLowerCase(); }
+      return x<y ? -sortDir : x>y ? sortDir : 0;
+    });
+
+  const head = COLS.map(col => {
+    const dir = sortKey===col.key ? (sortDir===1?"ascending":"descending") : "none";
+    const ar = sortKey===col.key ? `<span class="ar">${sortDir===1?"▲":"▼"}</span>` : "";
+    return `<th tabindex="0" role="columnheader" aria-sort="${dir}" data-k="${col.key}">${col.label}${ar}</th>`;
+  }).join("");
+
+  const body = rows.map(c => `
+    <tr class="${recent(c.last_changed)?"recent":""}">
+      <td><span class="flag">${flag(c.code)}</span><span class="cty"><span class="nm">${c.name}</span><span class="rg">${regionShort(c.region)}</span></span></td>
+      <td class="type"><span class="pill ${c.type==="GST"?"gst":""}">${c.type}</span></td>
+      <td class="rate"><span class="num">${fmt(c.standard)}</span><span class="track"><span class="fill" style="width:${Math.min(100,c.standard/BAR_MAX*100)}%"></span></span></td>
+      <td class="when">${c.last_changed ? (recent(c.last_changed)?`<span class="flag-new">${c.last_changed}</span>`:c.last_changed) : '<span class="none">not recorded</span>'}</td>
+    </tr>`).join("");
+
+  document.getElementById("mount").innerHTML =
+    rows.length ? `<table><thead><tr>${head}</tr></thead><tbody>${body}</tbody></table>`
+                : `<div class="err">No jurisdictions match that filter.</div>`;
+
+  document.querySelectorAll("th").forEach(th => {
+    const go = () => {
+      const k = th.dataset.k;
+      if (k===sortKey) sortDir*=-1; else { sortKey=k; sortDir = k==="name"?1:-1; }
+      render();
+    };
+    th.onclick = go;
+    th.onkeydown = e => { if (e.key==="Enter" || e.key===" ") { e.preventDefault(); go(); } };
+  });
+}
+
+document.getElementById("q").oninput = e => { query=e.target.value.toLowerCase().trim(); render(); };
+document.querySelectorAll("#region button").forEach(b => b.onclick = () => {
+  document.querySelectorAll("#region button").forEach(x=>x.classList.remove("on"));
+  b.classList.add("on"); region=b.dataset.r; render();
+});
+
+fetch("./data/rates.json")
+  .then(r => { if(!r.ok) throw new Error(r.status); return r.json(); })
+  .then(d => {
+    DATA = d.countries;
+    document.getElementById("count").textContent = d.count;
+    document.getElementById("updated").textContent = (d.generated||"").slice(0,10);
+    stats(DATA);
+    render();
+  })
+  .catch(e => {
+    document.getElementById("spread").style.display = "none";
+    document.getElementById("mount").innerHTML =
+      `<div class="err">Could not load the rate data (${e.message}). If you just forked this, run the “Update VAT rates” workflow once from the Actions tab.</div>`;
+  });
+
+const subForm = document.getElementById("subForm");
+if (subForm) {
+  subForm.addEventListener("submit", e => {
+    const msg = document.getElementById("subMsg");
+    if (subForm.action.includes("YOUR_BUTTONDOWN_USERNAME")) {
+      e.preventDefault();
+      msg.classList.add("err");
+      msg.textContent = "Signups aren’t connected yet.";
+      return;
+    }
+    msg.classList.remove("err");
+    msg.textContent = "Thanks. Check your inbox to confirm your subscription.";
+    // Clear only AFTER the browser has serialized and sent the POST. Clearing it
+    // synchronously here would empty the field before the form body is built,
+    // sending "email=" with no value and getting a 400 from Buttondown.
+    setTimeout(() => { document.getElementById("subEmail").value = ""; }, 0);
+  });
+}
+</script>
+</body>
+</html>
