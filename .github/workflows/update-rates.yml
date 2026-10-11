@@ -1,0 +1,84 @@
+name: Update VAT rates
+
+# Runs daily after the TEDB-backed source refreshes (07:00 UTC), commits a new
+# snapshot only when a rate actually changed, then on a change emails subscribers
+# (via Buttondown) and publishes a GitHub Release for repo watchers.
+# You can also trigger it by hand from the Actions tab.
+
+on:
+  schedule:
+    - cron: "30 7 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: update-rates
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Fetch and diff rates
+        id: rates
+        run: python scripts/update_rates.py
+
+      - name: Commit snapshot if changed
+        if: steps.rates.outputs.changed == 'true'
+        env:
+          HEADLINE: ${{ steps.rates.outputs.headline }}
+        run: |
+          git config user.name "vat-tracker-bot"
+          git config user.email "actions@github.com"
+          git add data/rates.json
+          git commit -m "data: ${HEADLINE} ($(date -u +%Y-%m-%d))"
+          git push
+
+      # Emails all confirmed subscribers via Buttondown (the primary alert channel).
+      # No-ops until BUTTONDOWN_API_KEY is set. Runs before the release so a release
+      # hiccup can never block the subscriber email.
+      - name: Email subscribers via Buttondown
+        if: steps.rates.outputs.changed == 'true' && env.BUTTONDOWN_API_KEY != ''
+        env:
+          BUTTONDOWN_API_KEY: ${{ secrets.BUTTONDOWN_API_KEY }}
+          EMAIL_MD: ${{ steps.rates.outputs.email_md }}
+          SUBJECT: ${{ steps.rates.outputs.subject }}
+        run: |
+          payload=$(jq -n --arg s "$SUBJECT" --arg b "$EMAIL_MD" '{subject:$s, body:$b, status:"about_to_send"}')
+          resp=$(curl -sS -X POST https://api.buttondown.com/v1/emails \
+              -H "Authorization: Token ${BUTTONDOWN_API_KEY}" \
+              -H "Content-Type: application/json" \
+              -H "X-Buttondown-Live-Dangerously: true" \
+              --data "$payload" -w $'\n%{http_code}')
+          code=$(printf '%s' "$resp" | tail -n1)
+          bd=$(printf '%s' "$resp" | sed '$d' | tr '\n' ' ')
+          echo "Buttondown HTTP $code"
+          echo "$bd"
+          if [ "$code" -ge 400 ] || [ -z "$code" ]; then
+            echo "::error title=Buttondown send failed::HTTP $code - $bd"
+            exit 1
+          fi
+
+      # Publishing a release makes GitHub email everyone watching the repo, from its
+      # own servers, so repo watchers get change alerts with no setup. Runs regardless
+      # of whether the email step above succeeded.
+      - name: Announce change as a release
+        if: ${{ !cancelled() && steps.rates.outputs.changed == 'true' }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SUMMARY: ${{ steps.rates.outputs.summary }}
+        run: |
+          printf '%s\n\nLive table: https://elenamihaimarginean.github.io/vat-gst-rates-tracker/\n' "$SUMMARY" > /tmp/notes.md
+          gh release create "rates-$(date -u +%Y%m%d-%H%M%S)" \
+            --title "VAT/GST rate change" \
+            --notes-file /tmp/notes.md
