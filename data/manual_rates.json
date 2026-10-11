@@ -1,0 +1,32 @@
+{
+  "_comment": "Non-European GST jurisdictions not covered by the VATNode dataset. Maintained by hand. These change very rarely (years to decades). Check the source links occasionally and edit the standard value plus last_changed when a rate moves.",
+  "countries": {
+    "SG": {
+      "name": "Singapore",
+      "type": "GST",
+      "standard": 9.0,
+      "currency": "SGD",
+      "region": "Asia-Pacific",
+      "last_changed": "2024-01-01",
+      "source_url": "https://www.iras.gov.sg/taxes/goods-services-tax-(gst)/basics-of-gst/goods-and-services-tax-(gst)-what-it-is-and-how-it-works"
+    },
+    "AU": {
+      "name": "Australia",
+      "type": "GST",
+      "standard": 10.0,
+      "currency": "AUD",
+      "region": "Asia-Pacific",
+      "last_changed": "2000-07-01",
+      "source_url": "https://www.ato.gov.au/businesses-and-organisations/gst-excise-and-indirect-taxes/gst"
+    },
+    "NZ": {
+      "name": "New Zealand",
+      "type": "GST",
+      "standard": 15.0,
+      "currency": "NZD",
+      "region": "Asia-Pacific",
+      "last_changed": "2010-10-01",
+      "source_url": "https://www.ird.govt.nz/gst"
+    }
+  }
+}

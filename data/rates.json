@@ -1,0 +1,341 @@
+{
+  "generated": "2026-10-11T17:50:53Z",
+  "source_version": "2026-10-10",
+  "sources": {
+    "europe": "https://cdn.jsdelivr.net/gh/vatnode/eu-vat-rates-data@main/data/eu-vat-rates-data.json",
+    "gst": "data/manual_rates.json"
+  },
+  "count": 33,
+  "countries": [
+    {
+      "code": "AU",
+      "name": "Australia",
+      "type": "GST",
+      "standard": 10.0,
+      "currency": "AUD",
+      "region": "Asia-Pacific",
+      "last_changed": "2000-07-01",
+      "source": "manual"
+    },
+    {
+      "code": "AT",
+      "name": "Austria",
+      "type": "VAT",
+      "standard": 20.0,
+      "currency": "EUR",
+      "region": "EU",
+      "last_changed": "1984-01-01",
+      "source": "VATNode / EC TEDB"
+    },
+    {
+      "code": "BE",
+      "name": "Belgium",
+      "type": "VAT",
+      "standard": 21.0,
+      "currency": "EUR",
+      "region": "EU",
+      "last_changed": "1996-01-01",
+      "source": "VATNode / EC TEDB"
+    },
+    {
+      "code": "BG",
+      "name": "Bulgaria",
+      "type": "VAT",
+      "standard": 20.0,
+      "currency": "EUR",
+      "region": "EU",
+      "last_changed": "1999-01-01",
+      "source": "VATNode / EC TEDB"
+    },
+    {
+      "code": "HR",
+      "name": "Croatia",
+      "type": "VAT",
+      "standard": 25.0,
+      "currency": "EUR",
+      "region": "EU",
+      "last_changed": "2012-03-01",
+      "source": "VATNode / EC TEDB"
+    },
+    {
+      "code": "CY",
+      "name": "Cyprus",
+      "type": "VAT",
+      "standard": 19.0,
+      "currency": "EUR",
+      "region": "EU",
+      "last_changed": "2014-01-13",
+      "source": "VATNode / EC TEDB"
+    },
+    {
+      "code": "CZ",
+      "name": "Czechia",
+      "type": "VAT",
+      "standard": 21.0,
+      "currency": "CZK",
+      "region": "EU",
+      "last_changed": "2013-01-01",
+      "source": "VATNode / EC TEDB"
+    },
+    {
+      "code": "DK",
+      "name": "Denmark",
+      "type": "VAT",
+      "standard": 25.0,
+      "currency": "DKK",
+      "region": "EU",
+      "last_changed": "1992-01-01",
+      "source": "VATNode / EC TEDB"
+    },
+    {
+      "code": "EE",
+      "name": "Estonia",
+      "type": "VAT",
+      "standard": 24.0,
+      "currency": "EUR",
+      "region": "EU",
+      "last_changed": "2025-07-01",
+      "source": "VATNode / EC TEDB"
+    },
+    {
+      "code": "FI",
+      "name": "Finland",
+      "type": "VAT",
+      "standard": 25.5,
+      "currency": "EUR",
+      "region": "EU",
+      "last_changed": "2024-09-01",
+      "source": "VATNode / EC TEDB"
+    },
+    {
+      "code": "FR",
+      "name": "France",
+      "type": "VAT",
+      "standard": 20.0,
+      "currency": "EUR",
+      "region": "EU",
+      "last_changed": "2014-01-01",
+      "source": "VATNode / EC TEDB"
+    },
+    {
+      "code": "DE",
+      "name": "Germany",
+      "type": "VAT",
+      "standard": 19.0,
+      "currency": "EUR",
+      "region": "EU",
+      "last_changed": "2007-01-01",
+      "source": "VATNode / EC TEDB"
+    },
+    {
+      "code": "GR",
+      "name": "Greece",
+      "type": "VAT",
+      "standard": 24.0,
+      "currency": "EUR",
+      "region": "EU",
+      "last_changed": "2016-06-01",
+      "source": "VATNode / EC TEDB"
+    },
+    {
+      "code": "HU",
+      "name": "Hungary",
+      "type": "VAT",
+      "standard": 27.0,
+      "currency": "HUF",
+      "region": "EU",
+      "last_changed": "2012-01-01",
+      "source": "VATNode / EC TEDB"
+    },
+    {
+      "code": "IE",
+      "name": "Ireland",
+      "type": "VAT",
+      "standard": 23.0,
+      "currency": "EUR",
+      "region": "EU",
+      "last_changed": "2012-01-01",
+      "source": "VATNode / EC TEDB"
+    },
+    {
+      "code": "IT",
+      "name": "Italy",
+      "type": "VAT",
+      "standard": 22.0,
+      "currency": "EUR",
+      "region": "EU",
+      "last_changed": "2013-10-01",
+      "source": "VATNode / EC TEDB"
+    },
+    {
+      "code": "LV",
+      "name": "Latvia",
+      "type": "VAT",
+      "standard": 21.0,
+      "currency": "EUR",
+      "region": "EU",
+      "last_changed": "2012-07-01",
+      "source": "VATNode / EC TEDB"
+    },
+    {
+      "code": "LT",
+      "name": "Lithuania",
+      "type": "VAT",
+      "standard": 21.0,
+      "currency": "EUR",
+      "region": "EU",
+      "last_changed": "2009-09-01",
+      "source": "VATNode / EC TEDB"
+    },
+    {
+      "code": "LU",
+      "name": "Luxembourg",
+      "type": "VAT",
+      "standard": 17.0,
+      "currency": "EUR",
+      "region": "EU",
+      "last_changed": "2024-01-01",
+      "source": "VATNode / EC TEDB"
+    },
+    {
+      "code": "MT",
+      "name": "Malta",
+      "type": "VAT",
+      "standard": 18.0,
+      "currency": "EUR",
+      "region": "EU",
+      "last_changed": "2004-01-01",
+      "source": "VATNode / EC TEDB"
+    },
+    {
+      "code": "NL",
+      "name": "Netherlands",
+      "type": "VAT",
+      "standard": 21.0,
+      "currency": "EUR",
+      "region": "EU",
+      "last_changed": "2012-10-01",
+      "source": "VATNode / EC TEDB"
+    },
+    {
+      "code": "NZ",
+      "name": "New Zealand",
+      "type": "GST",
+      "standard": 15.0,
+      "currency": "NZD",
+      "region": "Asia-Pacific",
+      "last_changed": "2010-10-01",
+      "source": "manual"
+    },
+    {
+      "code": "NO",
+      "name": "Norway",
+      "type": "VAT",
+      "standard": 25.0,
+      "currency": "NOK",
+      "region": "Europe (non-EU)",
+      "last_changed": "2005-01-01",
+      "source": "VATNode / EC TEDB"
+    },
+    {
+      "code": "PL",
+      "name": "Poland",
+      "type": "VAT",
+      "standard": 23.0,
+      "currency": "PLN",
+      "region": "EU",
+      "last_changed": "2011-01-01",
+      "source": "VATNode / EC TEDB"
+    },
+    {
+      "code": "PT",
+      "name": "Portugal",
+      "type": "VAT",
+      "standard": 23.0,
+      "currency": "EUR",
+      "region": "EU",
+      "last_changed": "2011-01-01",
+      "source": "VATNode / EC TEDB"
+    },
+    {
+      "code": "RO",
+      "name": "Romania",
+      "type": "VAT",
+      "standard": 21.0,
+      "currency": "RON",
+      "region": "EU",
+      "last_changed": "2025-08-01",
+      "source": "VATNode / EC TEDB"
+    },
+    {
+      "code": "SG",
+      "name": "Singapore",
+      "type": "GST",
+      "standard": 9.0,
+      "currency": "SGD",
+      "region": "Asia-Pacific",
+      "last_changed": "2024-01-01",
+      "source": "manual"
+    },
+    {
+      "code": "SK",
+      "name": "Slovakia",
+      "type": "VAT",
+      "standard": 23.0,
+      "currency": "EUR",
+      "region": "EU",
+      "last_changed": "2025-01-01",
+      "source": "VATNode / EC TEDB"
+    },
+    {
+      "code": "SI",
+      "name": "Slovenia",
+      "type": "VAT",
+      "standard": 22.0,
+      "currency": "EUR",
+      "region": "EU",
+      "last_changed": "2013-07-01",
+      "source": "VATNode / EC TEDB"
+    },
+    {
+      "code": "ES",
+      "name": "Spain",
+      "type": "VAT",
+      "standard": 21.0,
+      "currency": "EUR",
+      "region": "EU",
+      "last_changed": "2012-09-01",
+      "source": "VATNode / EC TEDB"
+    },
+    {
+      "code": "SE",
+      "name": "Sweden",
+      "type": "VAT",
+      "standard": 25.0,
+      "currency": "SEK",
+      "region": "EU",
+      "last_changed": "1990-07-01",
+      "source": "VATNode / EC TEDB"
+    },
+    {
+      "code": "CH",
+      "name": "Switzerland",
+      "type": "VAT",
+      "standard": 8.1,
+      "currency": "CHF",
+      "region": "Europe (non-EU)",
+      "last_changed": "2024-01-01",
+      "source": "VATNode / EC TEDB"
+    },
+    {
+      "code": "GB",
+      "name": "United Kingdom",
+      "type": "VAT",
+      "standard": 20.0,
+      "currency": "GBP",
+      "region": "Europe (non-EU)",
+      "last_changed": "2011-01-04",
+      "source": "VATNode / EC TEDB"
+    }
+  ]
+}
