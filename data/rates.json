@@ -1,12 +1,22 @@
 {
-  "generated": "2026-10-11T17:50:53Z",
-  "source_version": "2026-10-10",
+  "generated": "2026-10-13T09:23:26Z",
+  "source_version": "2026-10-12",
   "sources": {
     "europe": "https://cdn.jsdelivr.net/gh/vatnode/eu-vat-rates-data@main/data/eu-vat-rates-data.json",
     "gst": "data/manual_rates.json"
   },
-  "count": 33,
+  "count": 43,
   "countries": [
+    {
+      "code": "AL",
+      "name": "Albania",
+      "type": "VAT",
+      "standard": 20.0,
+      "currency": "ALL",
+      "region": "Europe (non-EU)",
+      "last_changed": null,
+      "source": "VATNode / EC TEDB"
+    },
     {
       "code": "AU",
       "name": "Australia",
@@ -35,6 +45,16 @@
       "currency": "EUR",
       "region": "EU",
       "last_changed": "1996-01-01",
+      "source": "VATNode / EC TEDB"
+    },
+    {
+      "code": "BA",
+      "name": "Bosnia and Herzegovina",
+      "type": "VAT",
+      "standard": 17.0,
+      "currency": "BAM",
+      "region": "Europe (non-EU)",
+      "last_changed": null,
       "source": "VATNode / EC TEDB"
     },
     {
@@ -118,6 +138,16 @@
       "source": "VATNode / EC TEDB"
     },
     {
+      "code": "GE",
+      "name": "Georgia",
+      "type": "VAT",
+      "standard": 18.0,
+      "currency": "GEL",
+      "region": "Europe (non-EU)",
+      "last_changed": null,
+      "source": "VATNode / EC TEDB"
+    },
+    {
       "code": "DE",
       "name": "Germany",
       "type": "VAT",
@@ -145,6 +175,16 @@
       "currency": "HUF",
       "region": "EU",
       "last_changed": "2012-01-01",
+      "source": "VATNode / EC TEDB"
+    },
+    {
+      "code": "IS",
+      "name": "Iceland",
+      "type": "VAT",
+      "standard": 24.0,
+      "currency": "ISK",
+      "region": "Europe (non-EU)",
+      "last_changed": null,
       "source": "VATNode / EC TEDB"
     },
     {
@@ -208,6 +248,26 @@
       "source": "VATNode / EC TEDB"
     },
     {
+      "code": "MD",
+      "name": "Moldova",
+      "type": "VAT",
+      "standard": 20.0,
+      "currency": "MDL",
+      "region": "Europe (non-EU)",
+      "last_changed": null,
+      "source": "VATNode / EC TEDB"
+    },
+    {
+      "code": "ME",
+      "name": "Montenegro",
+      "type": "VAT",
+      "standard": 21.0,
+      "currency": "EUR",
+      "region": "Europe (non-EU)",
+      "last_changed": null,
+      "source": "VATNode / EC TEDB"
+    },
+    {
       "code": "NL",
       "name": "Netherlands",
       "type": "VAT",
@@ -226,6 +286,16 @@
       "region": "Asia-Pacific",
       "last_changed": "2010-10-01",
       "source": "manual"
+    },
+    {
+      "code": "MK",
+      "name": "North Macedonia",
+      "type": "VAT",
+      "standard": 18.0,
+      "currency": "MKD",
+      "region": "Europe (non-EU)",
+      "last_changed": null,
+      "source": "VATNode / EC TEDB"
     },
     {
       "code": "NO",
@@ -265,6 +335,16 @@
       "currency": "RON",
       "region": "EU",
       "last_changed": "2025-08-01",
+      "source": "VATNode / EC TEDB"
+    },
+    {
+      "code": "RS",
+      "name": "Serbia",
+      "type": "VAT",
+      "standard": 20.0,
+      "currency": "RSD",
+      "region": "Europe (non-EU)",
+      "last_changed": null,
       "source": "VATNode / EC TEDB"
     },
     {
@@ -325,6 +405,26 @@
       "currency": "CHF",
       "region": "Europe (non-EU)",
       "last_changed": "2024-01-01",
+      "source": "VATNode / EC TEDB"
+    },
+    {
+      "code": "TR",
+      "name": "Turkey",
+      "type": "VAT",
+      "standard": 20.0,
+      "currency": "TRY",
+      "region": "Europe (non-EU)",
+      "last_changed": null,
+      "source": "VATNode / EC TEDB"
+    },
+    {
+      "code": "UA",
+      "name": "Ukraine",
+      "type": "VAT",
+      "standard": 20.0,
+      "currency": "UAH",
+      "region": "Europe (non-EU)",
+      "last_changed": null,
       "source": "VATNode / EC TEDB"
     },
     {

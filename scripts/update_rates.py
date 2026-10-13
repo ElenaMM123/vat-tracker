@@ -26,7 +26,14 @@ import sys
 import urllib.request
 from datetime import date, datetime, timezone
 
+# Primary (CDN) and fallback (GitHub raw) URLs for the current rates and the
+# standard-rate history. The history file carries EU-27 standard-rate periods
+# back to 1967, each current rate marked by a period with "to": null; we use it
+# to source effective dates automatically instead of hand-seeding them.
 VATNODE_URL = "https://cdn.jsdelivr.net/gh/vatnode/eu-vat-rates-data@main/data/eu-vat-rates-data.json"
+VATNODE_RAW = "https://raw.githubusercontent.com/vatnode/eu-vat-rates-data/main/data/eu-vat-rates-data.json"
+HISTORY_URL = "https://cdn.jsdelivr.net/gh/vatnode/eu-vat-rates-data@main/data/eu-vat-rates-history.json"
+HISTORY_RAW = "https://raw.githubusercontent.com/vatnode/eu-vat-rates-data/main/data/eu-vat-rates-history.json"
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
@@ -68,6 +75,17 @@ EUROPE = {
     "GB": ("United Kingdom", "Europe (non-EU)"),
     "NO": ("Norway", "Europe (non-EU)"),
     "CH": ("Switzerland", "Europe (non-EU)"),
+    # Additional non-EU European jurisdictions carried in the same VATNode feed.
+    "IS": ("Iceland", "Europe (non-EU)"),
+    "AL": ("Albania", "Europe (non-EU)"),
+    "BA": ("Bosnia and Herzegovina", "Europe (non-EU)"),
+    "GE": ("Georgia", "Europe (non-EU)"),
+    "MD": ("Moldova", "Europe (non-EU)"),
+    "ME": ("Montenegro", "Europe (non-EU)"),
+    "MK": ("North Macedonia", "Europe (non-EU)"),
+    "RS": ("Serbia", "Europe (non-EU)"),
+    "TR": ("Turkey", "Europe (non-EU)"),
+    "UA": ("Ukraine", "Europe (non-EU)"),
 }
 
 # VATNode normalises Greece to GR, but guard against the TEDB-internal EL just in case.
@@ -78,10 +96,44 @@ def today_iso():
     return date.today().isoformat()
 
 
+def _fetch_json(primary, fallback):
+    """Fetch JSON from the CDN, falling back to GitHub raw if the CDN is unreachable."""
+    last = None
+    for url in (primary, fallback):
+        try:
+            req = urllib.request.Request(url, headers={"User-Agent": "vat-tracker"})
+            with urllib.request.urlopen(req, timeout=30) as resp:
+                return json.loads(resp.read().decode("utf-8"))
+        except Exception as e:  # noqa: BLE001 - try the next source
+            last = e
+    raise last
+
+
 def fetch_vatnode():
-    req = urllib.request.Request(VATNODE_URL, headers={"User-Agent": "vat-tracker"})
-    with urllib.request.urlopen(req, timeout=30) as resp:
-        return json.loads(resp.read().decode("utf-8"))
+    return _fetch_json(VATNODE_URL, VATNODE_RAW)
+
+
+def fetch_history():
+    """Standard-rate history (EU-27). Optional: returns {} if unavailable so a
+    history outage never blocks a run; effective dates then fall back to seeds."""
+    try:
+        return _fetch_json(HISTORY_URL, HISTORY_RAW)
+    except Exception:  # noqa: BLE001
+        return {}
+
+
+def history_effective(hist):
+    """Map code -> {since, standard} for the current standard rate, taken from the
+    open history period (the one with "to": null)."""
+    out = {}
+    for code, rec in (hist.get("history") or {}).items():
+        periods = rec.get("periods") or []
+        cur = next((p for p in periods if p.get("to") in (None, "")), None)
+        if cur is None and periods:
+            cur = max(periods, key=lambda p: p.get("from", ""))
+        if cur and cur.get("standard") is not None and cur.get("from"):
+            out[code] = {"since": cur["from"], "standard": round(float(cur["standard"]), 2)}
+    return out
 
 
 def load_json(path):
@@ -105,6 +157,7 @@ def build():
     known = (load_json(KNOWN_PATH) or {}).get("rates", {})
 
     vatnode = fetch_vatnode()
+    hist_eff = history_effective(fetch_history())
     raw = vatnode.get("rates", {})
     # Re-key with aliases applied.
     source_rates = {}
@@ -133,8 +186,14 @@ def build():
         if old is not None and old.get("standard") != standard:
             last_changed = today
             changes.append((name, "VAT", old.get("standard"), standard))
-        # No observed change date yet: seed the documented effective date of the
-        # current rate, but only while the live rate still matches the seed.
+        # No observed change date yet: source the effective date of the current
+        # rate. Prefer the VATNode standard-rate history (EU-27, authoritative),
+        # then fall back to the documented seed. Both apply only while the live
+        # rate still matches the dated value.
+        if last_changed is None:
+            he = hist_eff.get(code)
+            if he is not None and abs(he["standard"] - standard) < 1e-9:
+                last_changed = he["since"]
         if last_changed is None:
             ke = known.get(code)
             if ke is not None and abs(float(ke.get("standard", -1)) - standard) < 1e-9:
