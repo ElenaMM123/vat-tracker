@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-13T09:23:26Z",
+  "generated": "2026-10-13T09:28:03Z",
   "source_version": "2026-10-12",
   "sources": {
     "europe": "https://cdn.jsdelivr.net/gh/vatnode/eu-vat-rates-data@main/data/eu-vat-rates-data.json",
@@ -54,7 +54,7 @@
       "standard": 17.0,
       "currency": "BAM",
       "region": "Europe (non-EU)",
-      "last_changed": null,
+      "last_changed": "2006-01-01",
       "source": "VATNode / EC TEDB"
     },
     {
@@ -144,7 +144,7 @@
       "standard": 18.0,
       "currency": "GEL",
       "region": "Europe (non-EU)",
-      "last_changed": null,
+      "last_changed": "2005-07-01",
       "source": "VATNode / EC TEDB"
     },
     {
@@ -184,7 +184,7 @@
       "standard": 24.0,
       "currency": "ISK",
       "region": "Europe (non-EU)",
-      "last_changed": null,
+      "last_changed": "2015-01-01",
       "source": "VATNode / EC TEDB"
     },
     {
@@ -264,7 +264,7 @@
       "standard": 21.0,
       "currency": "EUR",
       "region": "Europe (non-EU)",
-      "last_changed": null,
+      "last_changed": "2018-01-01",
       "source": "VATNode / EC TEDB"
     },
     {
@@ -344,7 +344,7 @@
       "standard": 20.0,
       "currency": "RSD",
       "region": "Europe (non-EU)",
-      "last_changed": null,
+      "last_changed": "2012-10-01",
       "source": "VATNode / EC TEDB"
     },
     {
@@ -414,7 +414,7 @@
       "standard": 20.0,
       "currency": "TRY",
       "region": "Europe (non-EU)",
-      "last_changed": null,
+      "last_changed": "2023-07-10",
       "source": "VATNode / EC TEDB"
     },
     {
@@ -424,7 +424,7 @@
       "standard": 20.0,
       "currency": "UAH",
       "region": "Europe (non-EU)",
-      "last_changed": null,
+      "last_changed": "1997-10-01",
       "source": "VATNode / EC TEDB"
     },
     {
