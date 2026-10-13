@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-13T09:28:03Z",
+  "generated": "2026-10-13T09:34:52Z",
   "source_version": "2026-10-12",
   "sources": {
     "europe": "https://cdn.jsdelivr.net/gh/vatnode/eu-vat-rates-data@main/data/eu-vat-rates-data.json",
@@ -14,7 +14,7 @@
       "standard": 20.0,
       "currency": "ALL",
       "region": "Europe (non-EU)",
-      "last_changed": null,
+      "last_changed": "1997-01-01",
       "source": "VATNode / EC TEDB"
     },
     {

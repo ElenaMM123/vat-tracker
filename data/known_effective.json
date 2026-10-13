@@ -1,5 +1,5 @@
 {
-  "_comment": "Effective date on which each country's CURRENT standard rate took effect. EU-27 dates are now sourced automatically from the VATNode standard-rate history file; these entries are the fallback used when the history lookup is unavailable or does not cover a jurisdiction (the non-EU ones). The script applies 'since' only while the live standard still equals 'standard'; once a rate changes, the observed change date takes over and the matching seed entry goes inert. Edit an entry when you learn a better date. Albania, Moldova and North Macedonia are intentionally not seeded: their rates are long-stable but lack a firmly sourced effective date, so they stay blank until a change is observed. Bulgaria's date (1999) is the documented year the 20% rate took effect; the exact day is less firmly sourced than the rest.",
+  "_comment": "Effective date on which each country's CURRENT standard rate took effect. EU-27 dates are now sourced automatically from the VATNode standard-rate history file; these entries are the fallback used when the history lookup is unavailable or does not cover a jurisdiction (the non-EU ones). The script applies 'since' only while the live standard still equals 'standard'; once a rate changes, the observed change date takes over and the matching seed entry goes inert. Edit an entry when you learn a better date. Moldova and North Macedonia are intentionally not seeded: their rates are long-stable but lack a firmly sourced effective date, so they stay blank until a change is observed. Bulgaria (1999) and Albania (1997, standard rate 20% from that year per ALTAX) use the documented year the rate took effect; the exact day is less firmly sourced than the rest.",
   "rates": {
     "AT": {"standard": 20.0, "since": "1984-01-01"},
     "BG": {"standard": 20.0, "since": "1999-01-01"},
@@ -37,6 +37,7 @@
     "ME": {"standard": 21.0, "since": "2018-01-01"},
     "BA": {"standard": 17.0, "since": "2006-01-01"},
     "TR": {"standard": 20.0, "since": "2023-07-10"},
-    "UA": {"standard": 20.0, "since": "1997-10-01"}
+    "UA": {"standard": 20.0, "since": "1997-10-01"},
+    "AL": {"standard": 20.0, "since": "1997-01-01"}
   }
 }
