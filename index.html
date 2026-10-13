@@ -289,7 +289,7 @@ function render() {
       <td><span class="flag">${flag(c.code)}</span><span class="cty"><span class="nm">${c.name}</span><span class="rg">${regionShort(c.region)}</span></span></td>
       <td class="type"><span class="pill ${c.type==="GST"?"gst":""}">${c.type}</span></td>
       <td class="rate"><span class="num">${fmt(c.standard)}</span><span class="track"><span class="fill" style="width:${Math.min(100,c.standard/BAR_MAX*100)}%"></span></span></td>
-      <td class="when">${c.last_changed ? (recent(c.last_changed)?`<span class="flag-new">${c.last_changed}</span>`:c.last_changed) : '<span class="none">not recorded</span>'}</td>
+      <td class="when">${c.last_changed ? (recent(c.last_changed)?`<span class="flag-new">${c.last_changed}</span>`:c.last_changed) : '<span class="none">n/a</span>'}</td>
     </tr>`).join("");
 
   document.getElementById("mount").innerHTML =
